@@ -292,6 +292,5 @@ TSWLatexianTemp*
 # /!/!!_Abgabe_!!/Quellcode/**/
 # /!!_Abgabe_!!/**
 
-Presentation_*.pdf
-ProjektArbeit_*.pdf
+Projektdokumentation_*.pdf
 /*.equ
