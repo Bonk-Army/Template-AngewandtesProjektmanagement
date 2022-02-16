@@ -71,51 +71,14 @@
 % Debug auf true setzen, hierbei wird der Changelog hinzugefügt, und keine Doppelseitenumbrüche gemacht (Zum drucken -> false)
 % Bitte zum drucken oben in der Präambel auch auf Doppelseite schalten!
 \setboolean{DEBUG}{true}
-% Soll der Changelog angezeigt werden ?
-\setboolean{CHANGELOG}{true}
 % Sollen die TODO's angezeigt werden ?
 \setboolean{TODO}{true}
-% =================================================================================================
-%Digitale Unterschrift auf die Erklärung -> PDF in zfiles/Signaturen/ und dann Signatur.pdf und Ort_Datum.pdf ??
-\setboolean{DIGITALE-UNTERSCHRIFT}{true}
-%Digitale Unterschriftsfeld auf die Erklärung ??
-\setboolean{DIGITAL-SIGN-AREA}{false}
-\ifthenelse{\boolean{DIGITAL-SIGN-AREA}}{\setboolean{DIGITALE-UNTERSCHRIFT}{false}}{}
-% =================================================================================================
-% Soll eine Erklärung eigefügt werden ?
-\setboolean{ERKLAERUNG}{true}
-%Soll das Abstract eingefügt werden ?
-\setboolean{ABSTRACT}{true}
-%Soll das Vorwort eingefügt werden ?
-\setboolean{VORWORT}{true}
-%Soll das Vorwort eingefügt werden ?
-\setboolean{DANKSAGUNG}{true}
-%Soll ein Sperrvermerk gemacht werden
-\setboolean{SPERRVERMERK}{true}
-%Literaturverweis auf Speicherung
-\setboolean{LITERATURVERWEIS}{true}
 % =================================================================================================
 % Soll ein Index eingefügt werden ?
 \setboolean{INDEX}{true}
 %Soll ne Trennlinie im Inhaltsverzeichnis eingefügt werden, vor Verzeichnissen, dem Inhalt und dem Anhang
 \setboolean{TRENNSTRICHE}{true}
-%Setzt ein Watermark
-\setboolean{WATERMARK}{false}
 % =================================================================================================
-%Dokumentenverzeichnis generieren ?
-\setboolean{DOKUMENTENVERZEICHNIS}{true}
-%Dateiverzeichnis generieren ?
-\setboolean{DATEIVERZEICHNIS}{true}
-% Soll auf das Dateiverzeichnis die CD ?
-\setboolean{CDBEILAGE}{true}
-%Sind Berichte abzugeben ? Automatische einbindung zum Drucken
-\setboolean{BERICHTE}{true}
-
-%————————————————————————————————————————————————————————————————————————————
-%					Watermark
-%————————————————————————————————————————————————————————————————————————————
-\ifthenelse{\boolean{WATERMARK}}{\usepackage{draftwatermark}}{}
-\ifthenelse{\boolean{WATERMARK}}{\SetWatermarkText{Entwurf}}{}
 
 %————————————————————————————————————————————————————————————————————————————
 %					PDF Optionen
@@ -132,14 +95,6 @@
 	% Wer keine Seitenzahlen braucht bis zum TOC einfach das Pagenumbering auf gobble und an der Stelle an der die Seitenzählung beginnen soll roman einfügen
 	\pagenumbering{gobble}
 	\pagestyle{plain}
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Changelog
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{CHANGELOG}}{
-		\include{./pages/orga/changelog}
-		\clearpage
-	}{}
 	
 	%—————————————————————————————————————————————————————————————————————————
 	%								TODOS
@@ -165,50 +120,6 @@
 	\setcounter{page}{2}
 	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
 	
-	
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Erklärung
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{ERKLAERUNG}}{
-		\phantomsection
-		\input{./pages/orga/erklaerung.tex}
-		\addcontentsline{toc}{chapter}{Erklärung}
-	}{}
-	\ifthenelse{\boolean{SPERRVERMERK}}{\input{./pages/orga/sperrvermerk.tex}}{}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Abstract
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{ABSTRACT}}{
-		\phantomsection
-		\include{./pages/content/abstract}
-	}{}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Vorwort
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{VORWORT}}{
-		\phantomsection
-		\addcontentsline{toc}{chapter}{Vorwort}
-		\include{./pages/content/vorwort}
-	}{}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Danksagung
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{DANKSAGUNG}}{
-		\phantomsection
-		\include{./pages/orga/danksagung}
-	}{}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
-	\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}}{}
-	
 	%—————————————————————————————————————————————————————————————————————————
 	%							Inhaltsverzeichnis
 	%—————————————————————————————————————————————————————————————————————————
@@ -220,25 +131,10 @@
 	\tableofcontents           % Inhaltsverzeichnis hier ausgeben
 	\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
 	
-	\phantomsection
-	\listoffigures             % Liste der Abbildungen
-	\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
-	\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
-	
-	\phantomsection
-	\listoftables              % Liste der Tabellen
-	\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
-	\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
-	
-	\phantomsection
-	\lstlistoflistings         % Liste der Listings
-	\addcontentsline{toc}{chapter}{Codeverzeichnis}
-	\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
-	
-	\phantomsection
-	\addcontentsline{toc}{chapter}{Formelverzeichnis}
-	\listofequations   % Liste der Formeln
-	\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
+	%\phantomsection
+	%\listoffigures             % Liste der Abbildungen
+	%\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+	%\ifthenelse{\boolean{DEBUG}}{\newpage}{\cleardoublepage}
 	
 	\phantomsection
 	\include{directories/acronyms} %Acronyms
@@ -248,6 +144,7 @@
 	%\addcontentsline{toc}{chapter}{Glossar} %Glossar
 	% Wenn Glossar nicht erstellt wird -> In den Projektarbeitspaketen automake=true setzen ....
 	\printglossaries
+	\glsaddall
 	
 	\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}}{}
 	
@@ -261,54 +158,21 @@
 	\setcounter{page}{1}
 	\pagestyle{headings} %<- Pagestyle reset 
 	
-	%—————————————————————————————————————————————————————————————————————————
-	%								IMRAD Schema
-	%	https://tu-dresden.de/ing/informatik/smt/cgv/ressourcen/dateien/materialien/howto-abschlussarbeit.pdf?lang=de
-	%
-	%	Kapitel 1 Einleitung Hier die Problemstellung im Anwendungskontext motivieren, die 
-	%	Aufgabenstellung mit eigenen Worten wiedergeben und einen Überblick über die Arbeit 
-	%	geben.
-	%\include{pages/content/kapitel1}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 2 Verwandte Arbeiten Aufzeigen, wer sich bereits mit dem Thema oder 
-	%	ähnlichen verwandten Themen auseinandergesetzt hat, welche Lösungswege beschrieben %	wurden und was die Verbindung der jeweiligen zur eigenen Arbeit ist.
-	%\include{pages/content/kapitel2}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 3 Grundlagen Vorstellung von mathematischem, technischem, algorithmischem %	
-	%	oder anderem Grundlagenwissen, um die Arbeit zu verstehen.
-	%\include{pages/content/kapitel3}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 4ff Methodik und Umsetzung Hauptteil der Arbeit – hier zunächst die 
-	%	Konzeption, danach die Realisierung beschreiben.
-	%\include{pages/content/kapitel4}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%\include{pages/content/kapitel5}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 4ff +1 Ergebnisse Die Ergebnisse objektiv darstellen und beschreiben, wie 
-	%	genau die Ergebnisse erhoben wurden. Auf Besonderheiten aufmerksam machen.
-	%\include{pages/content/kapitel6}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 4ff +2 Diskussion Die umgesetzte Lösung an den Ergebnissen diskutieren. 
-	%	Besonderheiten nachvollziehen, erläutern. Darauf aufbauend das Pro und Contra (des 
-	%	entwickelten Verfahrens) herausarbeiten. Unter Umständen können die Kapitel 
-	%	"Ergebnisse" und "Diskussion" in einem gemeinsamen Kapitel zusammengefasst werden.
-	%\include{pages/content/kapitel7}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%	Kapitel 4ff +3 Zusammenfassung Kurze Zusammenfassung und Bewertung, die 
-	%	Ergebnisse/Lösungen werden in einem Fazit kondensiert.
-	%\include{pages/content/kapitel8}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
 	% Einschub für die Trennlinie im ToC
-	%\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par} \clearpage}{}
+	\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par} \clearpage}{}
 	
-	%	Kapitel 4ff +4 Ausblick Der Ausblick zeigt sinnvolle Möglichkeiten einer 
-	%	weiterführenden Bearbeitung des Stoffes. Kapitel "Zusammenfassung" und "Ausblick" %
-	%	können unter Umständen in einem gemeinsamen zusammengefasst werden.
-	%\include{pages/content/kapitel9}	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
+	% Hier entsprechend EINEN Teile auskommentieren und vor allem TITELPAGE IMMER anpassen!!!
+	\include{pages/content/1_Projektidee}
+	%\include{pages/content/2_Projektkonzept}
+	%\include{pages/content/3_Projektdefinition}
+	%\include{pages/content/4_Projektablaufplan}
+	%\include{pages/content/5_Risikoanalyse}
+	%\include{pages/content/6_QualitaetssicherndeMassnahmen}
+	%\include{pages/content/7_Projektabschluss}
+	% Zwischenstände
+	%\include{pages/content/Zwischenstaende/ZS1}
 	
-	%—————————————————————————————————————————————————————————————————————————
-	%					         Demofiles -- REMOVE
-	\include{pages/content/readme}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	\include{pages/content/demo1}
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	%Trennlinie fürs ToC beim letzten Kapitel!
-	\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}}{}
-	\include{pages/content/demo2}
-	%—————————————————————————————————————————————————————————————————————————
+	
 	
 	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
 	
@@ -332,37 +196,4 @@
 	}{}
 	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
 	
-	%—————————————————————————————————————————————————————————————————————————
-	%						Literaturverzeichnis
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{LITERATURVERWEIS}}{\renewcommand\bibname{Literaturverzeichnis \\ \vspace{10mm} \normalsize{} Alle Quellen sind zusätzlich im Ordner \HREF{./Quellensicherung}{Quellensicherung} gespeichert ! \vspace{-2cm}}}{\def\refname{Literaturverzeichnis}}
-	\phantomsection
-	\addcontentsline{toc}{chapter}{Literaturverzeichnis}
-	\printbibliography
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%						Inhaltsbeilage
-	%—————————————————————————————————————————————————————————————————————————
-	% Für Sophia auch noch ein Inhaltsverzeichnis ;)
-	\cleardoublepage
-	\ifthenelse{\boolean{DOKUMENTENVERZEICHNIS}}{
-		\include{./pages/orga/inhalt}
-		\pagebreak
-	}{}
-	\ifthenelse{\boolean{DATEIVERZEICHNIS}}{
-		\include{./pages/orga/digitalerInhalt}
-		\pagebreak
-	}{}
-	
-	%—————————————————————————————————————————————————————————————————————————
-	%								Oranisatorisches
-	%—————————————————————————————————————————————————————————————————————————
-	\ifthenelse{\boolean{BERICHTE}}{
-		\includepdf[fitpaper=true, pages=1]{./zfiles/Dokumente/Teil-A}
-		\includepdf[fitpaper=true, pages=1]{./zfiles/Dokumente/Teil-B}
-		\includepdf[fitpaper=true, pages=1-3]{./zfiles/Dokumente/Bewertung}
-	}{} 
-	
-	\ifthenelse{\boolean{DEBUG}}{}{\cleardoublepage}
 \end{document}
