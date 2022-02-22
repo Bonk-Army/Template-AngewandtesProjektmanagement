@@ -139,9 +139,9 @@
 	\ifthenelse{\boolean{DEBUG}}{\newpage}{}
 	
 	\phantomsection
-	%\addcontentsline{toc}{chapter}{Glossar} %Glossar
-	% Wenn Glossar nicht erstellt wird -> In den Projektarbeitspaketen automake=true setzen ....
-	\printglossaries
+	\addcontentsline{toc}{chapter}{Glossar} %Glossar
+	%Wenn Glossar nicht erstellt wird -> In den Projektarbeitspaketen automake=true setzen ....
+	%\printglossaries
 	\glsaddall
 	
 	\ifthenelse{\boolean{TRENNSTRICHE}}{\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}}{}
